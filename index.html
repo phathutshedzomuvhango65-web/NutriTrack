@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#176b50">
+<meta name="description" content="NutriTrack helps you plan meals, record food, track hydration and build healthy habits.">
+<title>NutriTrack — Your nutrition companion</title>
+<style>
+:root{--green:#176b50;--mint:#e8f5ee;--ink:#18352b;--muted:#6b7d75;--line:#e2ebe5;--bg:#f5f8f5;--white:#fff;--orange:#f3a45b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.wrap{max-width:980px;margin:auto;padding:22px 18px 50px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:16px;background:var(--mint);display:grid;place-items:center;font-size:27px}.brand h1{font-size:23px;margin:0}.brand p{margin:0;color:var(--muted);font-size:12px;letter-spacing:.08em}
+nav{display:flex;gap:8px;overflow:auto;padding:5px 0 15px}.nav{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;white-space:nowrap;color:var(--ink)}.nav.active{background:var(--green);color:white;border-color:var(--green)}
+main{display:none}main.active{display:block}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 4px 16px #163d2910}.hero{background:linear-gradient(120deg,#e8f5ee,#f5fbf6);padding:24px}.hero h2{margin:4px 0;font-size:26px}.muted{color:var(--muted)}.eyebrow{font-size:12px;letter-spacing:.1em;color:var(--muted);font-weight:700}.stat{background:#f6faf7;border-radius:14px;padding:14px}.stat .emoji{font-size:23px}.stat strong{display:block;font-size:24px;margin:4px 0}.card h3{margin:0 0 12px;font-size:18px}.btn{background:var(--green);color:white;border:0;border-radius:11px;padding:11px 15px;font-weight:650}.btn.light{background:#fff;color:var(--green);border:1px solid var(--line)}.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.field{display:grid;gap:5px;margin:12px 0;font-size:14px;font-weight:600}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px;background:#fff;color:var(--ink)}.water{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.drop{font-size:24px}.habit{display:flex;align-items:center;gap:10px;margin:12px 0}.habit input{width:18px;height:18px;accent-color:var(--green)}.entry{padding:12px 0;border-bottom:1px solid var(--line)}.entry:last-child{border:0}.entrytop{display:flex;justify-content:space-between;gap:10px}.tag{display:inline-block;background:var(--mint);color:var(--green);border-radius:30px;padding:3px 9px;font-size:12px}.tip{background:#fff8ef;border-color:#f7e4cc}.days{display:flex;gap:7px;flex-wrap:wrap}.small{font-size:13px}.empty{color:var(--muted);font-size:14px;padding:8px 0}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
+@media(max-width:600px){.wrap{padding:16px 13px 35px}.grid{grid-template-columns:1fr}.hero h2{font-size:23px}.brand h1{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand"><div class="logo">🥑</div><div><h1>NutriTrack</h1><p>YOUR EVERYDAY NUTRITION COMPANION</p></div></div><span style="font-size:27px">🌱</span></header>
+<nav aria-label="Main navigation">
+<button class="nav active" data-tab="home">🏠 Home</button><button class="nav" data-tab="diary">🍽️ Food diary</button><button class="nav" data-tab="planner">📅 Meal planner</button><button class="nav" data-tab="learn">📚 Learn</button>
+</nav>
+<main id="home" class="active">
+<section class="card hero"><div class="eyebrow" id="today"></div><h2>Small habits, better wellbeing.</h2><p class="muted" style="margin:0">Build a balanced routine, one meal at a time.</p></section>
+<div class="grid">
+<section class="card"><div class="stat"><span class="emoji">🍎</span><strong id="mealCount">0</strong><span class="muted small">Meals recorded today</span></div></section>
+<section class="card"><div class="stat"><span class="emoji">💧</span><strong><span id="waterCount">0</span> glasses</strong><span class="muted small">Water logged today</span></div></section>
+</div>
+<section class="card"><h3>💧 Water tracker</h3><p class="muted small">Record a glass whenever you have water. Your needs vary with activity, weather and health.</p><div class="water" id="waterIcons"></div><div class="btnrow"><button class="btn" id="addWater">+ Add a glass</button><button class="btn light" id="undoWater">Undo</button></div></section>
+<section class="card"><h3>🌿 Healthy habits</h3><div id="habits">
+<label class="habit"><input type="checkbox"> Enjoy a variety of foods</label>
+<label class="habit"><input type="checkbox"> Include fruit or vegetables</label>
+<label class="habit"><input type="checkbox"> Drink water throughout the day</label>
+<label class="habit"><input type="checkbox"> Make time for regular meals and snacks</label>
+</div><p class="muted small"><span id="habitCount">0</span> of 4 habits checked</p></section>
+<section class="card tip"><h3>✨ Today's nutrition tip</h3><p style="margin:0">Try adding different colours of fruits and vegetables to your meals. A variety of foods provides a variety of nutrients.</p></section>
+</main>
+<main id="diary">
+<section class="card"><h2 style="margin-top:0">Food diary</h2><p class="muted">Keep a simple record of meals and snacks you enjoy.</p>
+<label class="field">Meal type<select id="mealType"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option></select></label>
+<label class="field">What did you eat?<input id="foodName" placeholder="e.g. Eggs, toast and fruit"></label>
+<label class="field">Notes (optional)<textarea id="foodNotes" rows="2" placeholder="Any notes about the meal?"></textarea></label>
+<button class="btn" id="saveMeal">Save meal</button><p id="diaryMessage" class="small" role="status"></p></section>
+<section class="card"><h3>Today's entries</h3><div id="entries" class="empty">No meals recorded yet.</div></section>
+</main>
+<main id="planner">
+<section class="card"><h2 style="margin-top:0">Weekly meal planner</h2><p class="muted">Plan flexible meal ideas that work for your schedule and budget.</p>
+<label class="field">Day<select id="planDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></label>
+<label class="field">Meal<select id="planType"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option></select></label>
+<label class="field">Meal idea<input id="planFood" placeholder="e.g. Rice, beans and vegetables"></label><button class="btn" id="savePlan">Add to plan</button></section>
+<section class="card"><h3>Your weekly plan</h3><div id="plans" class="empty">Your planned meals will appear here.</div></section>
+<section class="card"><h3>🍲 Simple meal inspiration</h3><p>🥣 Breakfast: Oats, milk and banana</p><p>🍚 Lunch: Rice, beans and vegetables</p><p>🥪 Snack: Yoghurt or a sandwich</p><p>🍗 Dinner: Chicken, pap and spinach</p><p class="muted small">Adapt these ideas to your preferences, culture, allergies and available ingredients.</p></section>
+</main>
+<main id="learn">
+<section class="card"><h2 style="margin-top:0">Nutrition guide</h2><p class="muted">A few basics to help you understand food and wellbeing.</p></section>
+<section class="card"><h3>🥚 Protein</h3><p>Supports growth, muscle development and repair. Sources include eggs, beans, lentils, fish, chicken and yoghurt.</p></section>
+<section class="card"><h3>🍞 Carbohydrates</h3><p>An important source of energy. Sources include bread, rice, potatoes, oats and maize meal.</p></section>
+<section class="card"><h3>🥑 Healthy fats</h3><p>Help the body absorb certain vitamins and support normal body functions. Sources include avocado, nuts, seeds and vegetable oils.</p></section>
+<section class="card"><h3>🥦 Vitamins and minerals</h3><p>Support many body functions, including immunity, bones and blood health. Eat a variety of fruits and vegetables.</p></section>
+<section class="card"><h3>🥛 Calcium</h3><p>Helps build and maintain bones and teeth. Sources include milk, yoghurt and some fortified foods.</p></section>
+<section class="card"><h3>🍽️ Balanced eating</h3><p>A varied eating pattern can include grains or starchy foods, protein foods, vegetables, fruit and healthy fats. There is no single perfect meal, and all foods can fit into a balanced lifestyle.</p></section>
+<section class="card tip"><h3>Important</h3><p class="small">NutriTrack is an educational habit-tracking tool, not a medical service. For individual nutrition needs, allergies or health concerns, speak with a registered dietitian or healthcare professional.</p></section>
+</main>
+<footer>NutriTrack • Healthy habits, not food restrictions 🌱</footer>
+</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id), storageKey='nutritrack-data-v1';
+let state={date:new Date().toDateString(),water:0,habits:[false,false,false,false],meals:[],plans:[]};
+try{const old=JSON.parse(localStorage.getItem(storageKey));if(old)state=old}catch(e){}
+if(state.date!==new Date().toDateString()){state.date=new Date().toDateString();state.water=0;state.habits=[false,false,false,false];state.meals=[]}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const save=()=>{try{localStorage.setItem(storageKey,JSON.stringify(state))}catch(e){}};
+function render(){
+$('today').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});
+$('waterCount').textContent=state.water;$('mealCount').textContent=state.meals.length;
+$('waterIcons').innerHTML=Array.from({length:Math.min(8,Math.max(6,state.water))},(_,i)=>`<span class="drop">${i<state.water?'💧':'◯'}</span>`).join('')+(state.water>8?`<span class="tag">+${state.water-8}</span>`:'');
+document.querySelectorAll('#habits input').forEach((el,i)=>el.checked=!!state.habits[i]);
+$('habitCount').textContent=state.habits.filter(Boolean).length;
+$('entries').innerHTML=state.meals.length?state.meals.map((m,i)=>`<div class="entry"><div class="entrytop"><span class="tag">${esc(m.type)}</span><button class="small" data-remove-meal="${i}">Remove</button></div><strong>${esc(m.food)}</strong>${m.notes?`<div class="muted small">${esc(m.notes)}</div>`:''}</div>`).join(''):'No meals recorded yet.';
+const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const planHtml=days.map(day=>{const items=state.plans.map((p,i)=>({...p,index:i})).filter(p=>p.day===day);return items.length?`<div class="entry"><strong>${day}</strong>${items.map(p=>`<div class="entrytop small"><span>${esc(p.type)}: ${esc(p.food)}</span><button data-remove-plan="${p.index}">×</button></div>`).join('')}</div>`:''}).join('');
+$('plans').innerHTML=planHtml||'Your planned meals will appear here.';
+}
+document.querySelectorAll('.nav').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('main').forEach(m=>m.classList.toggle('active',m.id===btn.dataset.tab))}));
+$('addWater').onclick=()=>{state.water++;save();render()};$('undoWater').onclick=()=>{state.water=Math.max(0,state.water-1);save();render()};
+document.querySelectorAll('#habits input').forEach((el,i)=>el.addEventListener('change',()=>{state.habits[i]=el.checked;save();render()}));
+$('saveMeal').onclick=()=>{const food=$('foodName').value.trim();if(!food){$('diaryMessage').textContent='Please enter a meal first.';return}state.meals.push({type:$('mealType').value,food,notes:$('foodNotes').value.trim()});$('foodName').value='';$('foodNotes').value='';$('diaryMessage').textContent='Meal saved.';save();render()};
+$('entries').onclick=e=>{const b=e.target.closest('[data-remove-meal]');if(b){state.meals.splice(+b.dataset.removeMeal,1);save();render()}};
+$('savePlan').onclick=()=>{const food=$('planFood').value.trim();if(!food){$('planFood').focus();return}state.plans.push({day:$('planDay').value,type:$('planType').value,food});$('planFood').value='';save();render()};
+$('plans').onclick=e=>{const b=e.target.closest('[data-remove-plan]');if(b){state.plans.splice(+b.dataset.removePlan,1);save();render()}};
+render();
+})();
+</script>
+</body>
+</html>
