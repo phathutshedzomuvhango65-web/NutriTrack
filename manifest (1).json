@@ -1,0 +1,22 @@
+{
+  "background_color": "#2c7e4b",
+  "description": "NutriTrack helps you plan meals, record food, track hydration and build healthy habits.",
+  "dir": "auto",
+  "display": "standalone",
+  "name": "NutriTrack",
+  "orientation": "portrait",
+  "scope": "/NutriTrack/",
+  "short_name": "NutriTrack",
+  "start_url": "/NutriTrack/",
+  "theme_color": "#3a5191",
+  "id": "nutritrack-app",
+  "lang": "en",
+  "display_override": [
+    "standalone",
+    "window-controls-overlay"
+  ],
+  "categories": [
+    "health",
+    "health &amp; fitness"
+  ]
+}
